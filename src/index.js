@@ -5,6 +5,8 @@ console.log(
     "Ready to start coding"
 );
 
+
+
 // const pipe = 
 //     (...fns) => 
 //     (x) => fns.reduce((v,f) => f(v),x);
