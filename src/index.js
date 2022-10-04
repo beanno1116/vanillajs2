@@ -1,59 +1,46 @@
 import './styles.css';
+import './data';
+import { isValid } from './utils';
+import { data } from './data';
 
 
-console.log(
-    "Ready to start coding"
-);
+let filteredData;
 
+const state = {
+    items: data,
+    currentItem: {
+        name: "",
+        size: "",
+        price: "",
+        category: "",
+    },
+}
 
+const changeState = element => {
+    const {id, value} = element.target;
+    if (!isValid(value) || !isValid(id)) return;
+    
 
-// const pipe = 
-//     (...fns) => 
-//     (x) => fns.reduce((v,f) => f(v),x);
+    setValue(id,value);
 
-//     const getName =(person => person.name);
-//     console.log(getName({name: "mike"}));
+    const result = {
+        ...state,
+        currentItem: {
+            ...(state.currentItem[id] = value)
+        }
+    }
 
+    console.log(result);
+    return result;
+}
 
-// const capatilizeFirstLetter = x => x.charAt(0).toUpperCase() +  x.slice(1);
-// console.log(capatilizeFirstLetter(getName( {name: "mike"})));
+const setValue = (id, value) => {
+    if (!isValid(value)) return;
+    document.getElementById(id).value = value;
+}
 
+const inputs = document.getElementsByTagName('input');
 
-// const getTwoLetters = x => x.substr(0,2);
-
-// const reverse = x => x.split("").reverse().join('');
-
-// console.log(reverse(getTwoLetters(capatilizeFirstLetter(getName({ name: "mike"})))));
-
-// const append = x => `${x} a bitch`;
-
-// console.log(append(reverse(getTwoLetters(capatilizeFirstLetter(getName({ name: "mike"}))))));
-
-// const r1 = pipe(getName,capatilizeFirstLetter,getTwoLetters,reverse, append)({name: 'mike'});
-// console.log(r1);
-
-
-// const data = [
-//     {
-//         boy: 'jeffrey',
-//         faction: 'bathhouse'
-//     },
-//     {
-//         boy: 'steven',
-//         faction: 'hitchhiker'
-//     }
-// ]
-
-// const Box = x => ({
-//     map: (f) => Box(f(x)),
-//     inspect: `Box${x}`,
-//     fold: (f) => f(x)
-// })
-
-
-// const findJeffrey = data => Box(data)
-// .map((x) => x.filter((b) => b.faction === 'bathhouse')[0])
-// .map(x=>x.boy)
-// .fold((x) => x);
-
-// console.log(findJeffrey(data));
+for(let input of inputs){
+    input.addEventListener('change',changeState);
+}
