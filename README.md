@@ -15,4 +15,4 @@ Add State
 
 # branch 10
 
-Add badges
+Add badges and added table to ui
