@@ -4,6 +4,7 @@ import { isValid } from './utils';
 import { data } from './data';
 
 
+
 let filteredData;
 
 const state = {
@@ -44,3 +45,5 @@ const inputs = document.getElementsByTagName('input');
 for(let input of inputs){
     input.addEventListener('change',changeState);
 }
+
+
