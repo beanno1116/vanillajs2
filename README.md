@@ -1,6 +1,6 @@
 # Vanilla JS
 
-![CI](https://github.com/beanno1116/vanillajs2/workflows/CI/badge.svg)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/beanno1116/vanillajs2/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/beanno1116/vanillajs2/tree/master)
 ![GitHub](https://img.shields.io/github/license/beanno1116/vanillajs2?style=plastic)
 
 this is a simple
@@ -20,3 +20,7 @@ Add badges and added table to ui
 # branch 11
 
 Add filter box
+
+# branch 14
+
+Add format money
