@@ -7,7 +7,7 @@ import { data } from './data';
 
 
 let filteredData = data;
-console.log(filteredData);
+// console.log(filteredData);
 
 const state = {
     items: data,
@@ -17,6 +17,65 @@ const state = {
         price: "",
         category: "",
     },
+}
+
+const getCheapestItem = () => {
+    
+    return filteredData.reduce((acc,curr) => {
+        if (acc.price < curr.price){
+            return acc;
+        }else{
+            return curr;
+        }
+    },9999)
+}
+
+const displayCheapestItem = () => {
+    const parent = document.getElementById('stats');
+    const divName = "cheapest-div";
+    const existing = document.getElementById(divName);
+    if (existing){
+        parent.removeChild(existing);
+    }
+    const cheapest = getCheapestItem();
+    const div = document.createElement('div');
+    div.id = divName;
+    div.innerHTML = `The cheapest item is ${cheapest.name} and it is ${cheapest.price}`;
+    parent.appendChild(div);
+}
+
+const mostExpensiveItem = () => {
+    return filteredData.reduce((acc,curr) => {
+        if (acc.price > curr.price){
+            return acc;
+        }else{
+            return curr;
+        }
+    },0);
+}
+
+const displayMostExpensiveItem = () => {
+    const parent = document.getElementById('stats');
+    const divName = "most-expensive";
+    const existing = document.getElementById(divName);
+    if (existing){
+        parent.removeChild(existing);
+    }
+    const highest = mostExpensiveItem();
+    const div = document.createElement('div');
+    div.id = divName;
+    
+    div.innerHTML = `The most expensive item is ${highest.name} and it is ${highest.price}`
+    parent.appendChild(div);
+}
+
+const buildDeleteLinks = () => {
+    const deletes = document.querySelectorAll('td[data-delete');
+    for(let del of deletes){
+        del.addEventListener("click",e => {
+            deleteItem(+e.currentTarget.id.substring(3));
+        })
+    }
 }
 
 const changeState = element => {
@@ -33,7 +92,7 @@ const changeState = element => {
         }
     }
 
-    console.log(result);
+    // console.log(result);
     return result;
 }
 
@@ -54,12 +113,15 @@ const buildTable = () => {
     html += '<tr><th>Products</th><th>Size</th><th>Price</th><th>Category</th><th>Delete</th></tr>';
 
     filteredData.map(item => {
-        const {name,price,category,size} = item;
-        html += `<tr><td>${name}</td><td>${size}</td><td>${price}</td><td>${category}</td><td>Delete</td></tr>`
+        const {name,id,price,category,size} = item;
+        html += `<tr><td>${name}</td><td>${size}</td><td>${price}</td><td>${category}</td><td id="tr-${id}" style="cursor:pointer;" data-delete="${id}">Delete</td></tr>`
     })
 
     html += '</table>';
     document.getElementById('items').innerHTML = html;
+    buildDeleteLinks();
+    displayCheapestItem();
+    displayMostExpensiveItem();
 }
 
 buildTable();
@@ -100,3 +162,13 @@ const buildFilterBox = () => {
 
 buildFilterBox();
 
+const deleteItem = id => {
+    const itemIndex = state.items.findIndex(i => i.id === id);
+    if ( itemIndex && itemIndex > 0){
+        const copiedItems = Array.from(state.items);
+        copiedItems.splice(itemIndex, 1);
+        state.items = copiedItems;
+        filteredData = copiedItems;
+        buildTable();
+    }
+}
