@@ -5,6 +5,7 @@ import { data } from './data';
 
 
 
+
 let filteredData = data;
 console.log(filteredData);
 
@@ -98,3 +99,4 @@ const buildFilterBox = () => {
 }
 
 buildFilterBox();
+
